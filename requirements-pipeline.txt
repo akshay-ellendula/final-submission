@@ -1,0 +1,8 @@
+# Full dependencies — API + Detection Pipeline.
+# Install this on your local machine (not inside Docker).
+-r requirements.txt
+ultralytics==8.3.27
+supervision==0.23.0
+torch==2.4.1
+torchvision==0.19.1
+opencv-python-headless==4.10.0.84

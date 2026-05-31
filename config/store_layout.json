@@ -1,0 +1,91 @@
+{
+  "schema_version": "1.0",
+  "store": {
+    "id": "ST1008",
+    "name": "Purplle Flagship",
+    "open_hour": 9,
+    "close_hour": 22,
+    "timezone": "Asia/Kolkata"
+  },
+  "staff_uniform_hsv": {
+    "h_range": [0, 179],
+    "s_range": [0, 80],
+    "v_range": [0, 70],
+    "note": "Dark/black uniform as observed on stocker in CAM5 and figures in CAM2. Value < 70 catches shadows + uniform together."
+  },
+  "cameras": {
+    "CAM_ENTRY_01": {
+      "source": "CAM 3.mp4",
+      "role": "entry",
+      "resolution": [1920, 1080],
+      "entry_line": {
+        "points": [[620, 380], [1450, 380]],
+        "inside_normal": [0, 1],
+        "description": "Horizontal line across the glass doorway threshold. Crossing downward = ENTRY, upward = EXIT."
+      },
+      "zones": [
+        {
+          "id": "ZONE_ENTRANCE",
+          "polygon": [[400, 200], [1600, 200], [1600, 700], [400, 700]],
+          "type": "entrance"
+        }
+      ]
+    },
+    "CAM_FLOOR_SKIN": {
+      "source": "CAM 1.mp4",
+      "role": "floor",
+      "resolution": [1920, 1080],
+      "entry_line": null,
+      "zones": [
+        {
+          "id": "ZONE_SKINCARE",
+          "polygon": [[100, 200], [1800, 200], [1800, 1000], [100, 1000]],
+          "type": "product_floor",
+          "sku_category": "skincare"
+        }
+      ]
+    },
+    "CAM_FLOOR_MAKEUP": {
+      "source": "CAM 2.mp4",
+      "role": "floor",
+      "resolution": [1920, 1080],
+      "entry_line": null,
+      "zones": [
+        {
+          "id": "ZONE_MAKEUP",
+          "polygon": [[100, 200], [1800, 200], [1800, 1000], [100, 1000]],
+          "type": "product_floor",
+          "sku_category": "makeup"
+        }
+      ]
+    },
+    "CAM_CASH_COUNTER": {
+      "source": "CAM 5.mp4",
+      "role": "floor",
+      "resolution": [1920, 1080],
+      "entry_line": null,
+      "zones": [
+        {
+          "id": "ZONE_BILLING",
+          "polygon": [[100, 200], [1800, 200], [1800, 1000], [100, 1000]],
+          "type": "billing",
+          "sku_category": "Cash Counter"
+        }
+      ]
+    },
+    "CAM_STOCKROOM": {
+      "source": "CAM 4.mp4",
+      "role": "stockroom",
+      "resolution": [1920, 1080],
+      "entry_line": null,
+      "force_is_staff": true,
+      "zones": [
+        {
+          "id": "ZONE_STOCKROOM",
+          "polygon": [[0, 0], [1920, 0], [1920, 1080], [0, 1080]],
+          "type": "staff_only"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Apex · Store Intelligence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+
+<div class="topbar">
+  <div class="logo">
+    <div class="logo-mark"></div>
+    <span>Apex<span class="sub">· Store Intelligence</span></span>
+  </div>
+  <div class="right">
+    <span class="store-chip" id="storeId">ST1008</span>
+    <span class="health-pill ok" id="healthPill">loading</span>
+    <span class="clock" id="clock">—:—:—</span>
+  </div>
+</div>
+
+<main>
+  <!-- KPI row -->
+  <div class="grid kpis" id="kpis">
+    <div class="card kpi">
+      <div class="label">Unique Visitors</div>
+      <div class="value"><span id="kVisitors">—</span></div>
+      <svg class="spark" id="sparkVisitors" viewBox="0 0 100 32" preserveAspectRatio="none"><path stroke="url(#g1)"/></svg>
+      <div class="foot" id="kVisitorsSub">today</div>
+    </div>
+    <div class="card kpi">
+      <div class="label">Conversion</div>
+      <div class="value"><span id="kConv">—</span><span class="unit">%</span></div>
+      <svg class="spark" id="sparkConv" viewBox="0 0 100 32" preserveAspectRatio="none"><path stroke="url(#g2)"/></svg>
+      <div class="foot">visitors → purchase</div>
+    </div>
+    <div class="card kpi">
+      <div class="label">POS Transactions</div>
+      <div class="value"><span id="kPos">—</span></div>
+      <svg class="spark" id="sparkPos" viewBox="0 0 100 32" preserveAspectRatio="none"><path stroke="url(#g3)"/></svg>
+      <div class="foot">today · all zones</div>
+    </div>
+    <div class="card kpi">
+      <div class="label">Queue Depth</div>
+      <div class="value"><span id="kQueue">—</span></div>
+      <svg class="spark" id="sparkQueue" viewBox="0 0 100 32" preserveAspectRatio="none"><path stroke="url(#g4)"/></svg>
+      <div class="foot">billing zone · now</div>
+    </div>
+    <div class="card kpi">
+      <div class="label">Abandonment</div>
+      <div class="value"><span id="kAband">—</span><span class="unit">%</span></div>
+      <svg class="spark" id="sparkAband" viewBox="0 0 100 32" preserveAspectRatio="none"><path stroke="url(#g5)"/></svg>
+      <div class="foot">billing exits pre-purchase</div>
+    </div>
+  </div>
+
+  <!-- gradient defs shared across sparklines -->
+  <svg width="0" height="0" style="position:absolute;">
+    <defs>
+      <linearGradient id="g1" x1="0" x2="1"><stop offset="0%" stop-color="#8b5cf6"/><stop offset="100%" stop-color="#06b6d4"/></linearGradient>
+      <linearGradient id="g2" x1="0" x2="1"><stop offset="0%" stop-color="#10b981"/><stop offset="100%" stop-color="#06b6d4"/></linearGradient>
+      <linearGradient id="g3" x1="0" x2="1"><stop offset="0%" stop-color="#6366f1"/><stop offset="100%" stop-color="#8b5cf6"/></linearGradient>
+      <linearGradient id="g4" x1="0" x2="1"><stop offset="0%" stop-color="#f59e0b"/><stop offset="100%" stop-color="#f43f5e"/></linearGradient>
+      <linearGradient id="g5" x1="0" x2="1"><stop offset="0%" stop-color="#f43f5e"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient>
+    </defs>
+  </svg>
+
+  <!-- Sales Insights -->
+  <div class="grid two">
+    <div class="card">
+      <div class="card-head">
+        <h2>Top Departments</h2>
+        <span class="badge" id="depBadge">today</span>
+      </div>
+      <div class="funnel" id="departments">
+        <div style="color:var(--text-3); font-size:14px;">waiting for POS data...</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-head">
+        <h2>Top Brands</h2>
+        <span class="badge" id="brandBadge">today</span>
+      </div>
+      <div class="funnel" id="brands">
+        <div style="color:var(--text-3); font-size:14px;">waiting for POS data...</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Funnel + Heatmap -->
+  <div class="grid two">
+    <div class="card">
+      <div class="card-head">
+        <h2>Conversion Funnel</h2>
+        <span class="badge" id="funnelBadge">—</span>
+      </div>
+      <div id="funnel"></div>
+    </div>
+    <div class="card">
+      <div class="card-head">
+        <h2>Zone Heatmap</h2>
+        <span class="badge" id="heatBadge">—</span>
+      </div>
+      <div class="heat-grid" id="heat"></div>
+      <div class="heat-legend">
+        <span>cold</span>
+        <div class="gradient"></div>
+        <span>hot</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cameras -->
+  <div class="card" style="margin-bottom:20px;">
+    <div class="card-head"><h2>Camera Feeds</h2><span class="badge">5 streams</span></div>
+    <div class="cam-strip" id="cams">
+      <div class="cam"><span class="dot"></span><span class="name">CAM_ENTRY_01</span><span class="meta" id="cam-CAM_ENTRY_01">—</span></div>
+      <div class="cam"><span class="dot"></span><span class="name">CAM_FLOOR_SKIN</span><span class="meta" id="cam-CAM_FLOOR_SKIN">—</span></div>
+      <div class="cam"><span class="dot"></span><span class="name">CAM_FLOOR_MAKEUP</span><span class="meta" id="cam-CAM_FLOOR_MAKEUP">—</span></div>
+      <div class="cam"><span class="dot"></span><span class="name">CAM_FLOOR_ACCESS</span><span class="meta" id="cam-CAM_FLOOR_ACCESS">—</span></div>
+      <div class="cam"><span class="dot"></span><span class="name">CAM_STOCKROOM</span><span class="meta" id="cam-CAM_STOCKROOM">—</span></div>
+    </div>
+  </div>
+
+  <!-- Anomalies -->
+  <div class="card">
+    <div class="card-head"><h2>Active Anomalies</h2><span class="badge" id="anomBadge">—</span></div>
+    <table>
+      <thead><tr><th style="width:30%;">Type</th><th style="width:12%;">Severity</th><th>Detail</th><th>Suggested action</th></tr></thead>
+      <tbody id="anomalies"><tr><td colspan="4" style="color:var(--text-3);">loading…</td></tr></tbody>
+    </table>
+  </div>
+</main>
+
+<footer>
+  Polling every 3 s · real-time events from your CCTV pipeline ·
+  <a href="/docs">OpenAPI</a> · <a href="/health">/health</a>
+</footer>
+
+<script src="/static/app.js"></script>
+</body>
+</html>

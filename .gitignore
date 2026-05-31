@@ -1,0 +1,50 @@
+# ─── Python ───────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# ─── Virtual Environment ──────────────────────────────────
+.venv/
+venv/
+env/
+
+# ─── Testing & Coverage ──────────────────────────────────
+.pytest_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+*.cover
+
+# ─── IDE ──────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ─── Environment ──────────────────────────────────────────
+.env
+
+# ─── OS ───────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ─── ML Model Weights ────────────────────────────────────
+*.pt
+*.onnx
+*.engine
+
+# ─── Data (large CCTV footage, generated events) ─────────
+data-provided/
+data/events.jsonl
+data/*.csv
+data/*.db
+data/*.log
+
+# ─── Docker volumes ──────────────────────────────────────
+postgres_data/

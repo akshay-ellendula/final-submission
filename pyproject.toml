@@ -1,0 +1,29 @@
+[project]
+name = "store-intelligence"
+version = "0.1.0"
+description = "Apex Retail Store Intelligence — Purplle Engineering Challenge"
+requires-python = ">=3.11"
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+addopts = "-ra -q"
+filterwarnings = [
+    "ignore::DeprecationWarning",
+]
+
+[tool.coverage.run]
+source = ["app", "pipeline"]
+omit = [
+    "app/main.py",
+    # CV-only modules require torch / ultralytics / opencv and are covered by
+    # pipeline integration, not pytest unit tests.
+    "pipeline/detect.py",
+    "pipeline/tracker.py",
+    "pipeline/post_pos.py",
+    "pipeline/staff.py",
+]
+
+[tool.coverage.report]
+show_missing = true
+skip_empty = true
