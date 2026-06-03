@@ -20,6 +20,7 @@ from typing import Any
 import asyncio
 import time
 from fastapi import FastAPI, HTTPException, Request, WebSocket, WebSocketDisconnect
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 
@@ -49,6 +50,13 @@ app = FastAPI(
     title="Apex Retail Store Intelligence",
     version="0.1.0",
     lifespan=lifespan,
+)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 app.add_middleware(StructuredLoggingMiddleware)
 register_error_handlers(app)
