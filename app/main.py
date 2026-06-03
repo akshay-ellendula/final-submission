@@ -46,10 +46,15 @@ async def lifespan(app: FastAPI):
     await dispose()
 
 
+import os as _os
+_RENDER_URL = _os.getenv("RENDER_EXTERNAL_URL")  # Render injects this automatically
+
 app = FastAPI(
     title="Apex Retail Store Intelligence",
     version="0.1.0",
     lifespan=lifespan,
+    servers=[{"url": _RENDER_URL}] if _RENDER_URL else None,
+    root_path=_os.getenv("ROOT_PATH", ""),
 )
 app.add_middleware(
     CORSMiddleware,
